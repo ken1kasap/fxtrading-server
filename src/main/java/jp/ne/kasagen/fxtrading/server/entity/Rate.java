@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Rate.findByCurrencyPair", query = "SELECT r FROM Rate r WHERE r.currencyPair = :currencyPair"),
     @NamedQuery(name = "Rate.findByAcquisitionTime", query = "SELECT r FROM Rate r WHERE r.acquisitionTime = :acquisitionTime")
 })
-@SequenceGenerator(name = "transactionSeq",sequenceName = "transaction_seq", allocationSize = 1)
+@SequenceGenerator(name = "transactionSeq", sequenceName = "transaction_seq", allocationSize = 1)
 public class Rate implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -81,7 +81,9 @@ public class Rate implements Serializable {
         this.transactionId = transactionId;
     }
 
-    public Rate(Long transactionId, String currencyPair, Date acquisitionTime, BigDecimal high, BigDecimal low, BigDecimal ask, BigDecimal bid, BigDecimal open) {
+    public Rate(Long transactionId, String currencyPair, Date acquisitionTime,
+            BigDecimal high, BigDecimal low, BigDecimal ask, BigDecimal bid,
+            BigDecimal open) {
         this.transactionId = transactionId;
         this.currencyPair = currencyPair;
         this.acquisitionTime = acquisitionTime;
@@ -170,10 +172,8 @@ public class Rate implements Serializable {
             return false;
         }
         Rate other = (Rate) object;
-        if ((this.transactionId == null && other.transactionId != null) || (this.transactionId != null && !this.transactionId.equals(other.transactionId))) {
-            return false;
-        }
-        return true;
+        return !((this.transactionId == null && other.transactionId != null) 
+                || (this.transactionId != null && !this.transactionId.equals(other.transactionId)));
     }
 
     @Override
